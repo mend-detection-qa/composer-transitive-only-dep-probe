@@ -1,0 +1,157 @@
+{
+    "schema_version": "1.0",
+    "pm": "composer",
+    "lockfile": "composer.lock",
+    "pattern": "transitive-only-dep",
+    "notes": "Single direct dependency (symfony/console). The full transitive closure spans 3 levels of depth. psr/container is reachable only through two intermediate packages (symfony/console -> symfony/service-contracts -> psr/container), making it the canonical depth-3 transitive-only assertion target.",
+    "packages": [
+        {
+            "name": "symfony/console",
+            "version": "v6.4.36",
+            "scope": "require",
+            "source": "registry",
+            "direct": true,
+            "children": [
+                {
+                    "name": "symfony/deprecation-contracts",
+                    "version": "v3.6.0",
+                    "scope": "require",
+                    "source": "registry",
+                    "direct": false,
+                    "children": []
+                },
+                {
+                    "name": "symfony/polyfill-mbstring",
+                    "version": "v1.37.0",
+                    "scope": "require",
+                    "source": "registry",
+                    "direct": false,
+                    "children": []
+                },
+                {
+                    "name": "symfony/service-contracts",
+                    "version": "v3.6.1",
+                    "scope": "require",
+                    "source": "registry",
+                    "direct": false,
+                    "children": [
+                        {
+                            "name": "psr/container",
+                            "version": "2.0.2",
+                            "scope": "require",
+                            "source": "registry",
+                            "direct": false,
+                            "children": []
+                        },
+                        {
+                            "name": "symfony/deprecation-contracts",
+                            "version": "v3.6.0",
+                            "scope": "require",
+                            "source": "registry",
+                            "direct": false,
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "name": "symfony/string",
+                    "version": "v7.4.8",
+                    "scope": "require",
+                    "source": "registry",
+                    "direct": false,
+                    "children": [
+                        {
+                            "name": "symfony/deprecation-contracts",
+                            "version": "v3.6.0",
+                            "scope": "require",
+                            "source": "registry",
+                            "direct": false,
+                            "children": []
+                        },
+                        {
+                            "name": "symfony/polyfill-ctype",
+                            "version": "v1.37.0",
+                            "scope": "require",
+                            "source": "registry",
+                            "direct": false,
+                            "children": []
+                        },
+                        {
+                            "name": "symfony/polyfill-intl-grapheme",
+                            "version": "v1.37.0",
+                            "scope": "require",
+                            "source": "registry",
+                            "direct": false,
+                            "children": []
+                        },
+                        {
+                            "name": "symfony/polyfill-intl-normalizer",
+                            "version": "v1.37.0",
+                            "scope": "require",
+                            "source": "registry",
+                            "direct": false,
+                            "children": []
+                        },
+                        {
+                            "name": "symfony/polyfill-mbstring",
+                            "version": "v1.37.0",
+                            "scope": "require",
+                            "source": "registry",
+                            "direct": false,
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "total_packages": 9,
+    "direct_count": 1,
+    "transitive_count": 8,
+    "unique_packages": [
+        "symfony/console:v6.4.36",
+        "psr/container:2.0.2",
+        "symfony/deprecation-contracts:v3.6.0",
+        "symfony/polyfill-ctype:v1.37.0",
+        "symfony/polyfill-intl-grapheme:v1.37.0",
+        "symfony/polyfill-intl-normalizer:v1.37.0",
+        "symfony/polyfill-mbstring:v1.37.0",
+        "symfony/service-contracts:v3.6.1",
+        "symfony/string:v7.4.8"
+    ],
+    "depth_analysis": {
+        "depth_1_direct": [
+            "symfony/console"
+        ],
+        "depth_2_via_console": [
+            "symfony/deprecation-contracts",
+            "symfony/polyfill-mbstring",
+            "symfony/service-contracts",
+            "symfony/string"
+        ],
+        "depth_3_transitive_only": [
+            "psr/container",
+            "symfony/polyfill-ctype",
+            "symfony/polyfill-intl-grapheme",
+            "symfony/polyfill-intl-normalizer"
+        ],
+        "assertion_target": {
+            "package": "psr/container",
+            "version": "2.0.2",
+            "shortest_path": "root -> symfony/console -> symfony/service-contracts -> psr/container",
+            "depth": 3,
+            "note": "psr/container has no direct declaration in root composer.json. Its only route to root passes through two intermediate transitive packages. Mend must detect it with correct parent link to symfony/service-contracts."
+        }
+    },
+    "mend_detection_expectations": {
+        "all_packages_must_appear": true,
+        "source_for_all": "registry",
+        "no_missing_transitives": true,
+        "failure_modes_exercised": [
+            "missing transitive dep at depth 3 (psr/container)",
+            "wrong parent link for depth-3 package (should be symfony/service-contracts, not symfony/console)",
+            "transitive-only package incorrectly marked as direct",
+            "depth-2 transitives missing from tree"
+        ]
+    }
+}
